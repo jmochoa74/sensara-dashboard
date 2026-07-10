@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SENSARA Dashboard</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
 :root{--g:#6db33f;--dg:#4e8c28;--deep:#1a2e0f;--lg:#eaf4df;--w:#fff;--ow:#f7faf3;--gray:#8a9e7c;--dark:#1c2a14;--bdr:#d4e8c0;--red:#c0392b;--amb:#e67e22;--blu:#2471a3;--pur:#8e44ad;--teal:#16a085}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--ow);color:var(--dark);min-height:100vh}
@@ -171,23 +172,18 @@ header p{color:var(--gray);font-size:11px;margin-top:2px}
     <span id="fact-sub">Cargando...</span>
   </div>
   <div class="pb">
-    <!-- KPIs -->
     <div class="g4" id="fact-kpis" style="margin-bottom:16px"></div>
-    <!-- Tabs estado -->
     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
       <button type="button" class="fact-tab active" data-estado="todos" style="padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--g);background:var(--lg);color:var(--dg)">Todos</button>
       <button type="button" class="fact-tab" data-estado="emitida" style="padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr);background:var(--ow);color:var(--gray)">Emitidas</button>
       <button type="button" class="fact-tab" data-estado="cobrada" style="padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr);background:var(--ow);color:var(--gray)">Cobradas</button>
       <button type="button" class="fact-tab" data-estado="presupuesto" style="padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid var(--bdr);background:var(--ow);color:var(--gray)">Presupuestos</button>
     </div>
-    <!-- Lista documentos -->
     <div id="fact-lista"></div>
-    <!-- Botón nuevo -->
     <div style="display:flex;gap:10px;margin-top:12px">
       <button type="button" id="btn-nueva-factura" style="padding:8px 16px;background:var(--g);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer">+ Nueva factura</button>
       <button type="button" id="btn-nuevo-presupuesto" style="padding:8px 16px;background:var(--ow);border:1px solid var(--bdr);border-radius:8px;font-size:12px;cursor:pointer;font-weight:600">+ Nuevo presupuesto</button>
     </div>
-    <!-- Formulario nuevo documento -->
     <div id="fact-form" style="display:none;margin-top:14px;padding:16px;border:1.5px solid var(--g);border-radius:10px;background:var(--lg)">
       <div style="font-size:13px;font-weight:700;color:var(--dg);margin-bottom:12px" id="fact-form-title">Nueva factura</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
@@ -227,13 +223,10 @@ header p{color:var(--gray);font-size:11px;margin-top:2px}
           </select>
         </div>
       </div>
-      <!-- Líneas -->
       <div style="font-size:12px;font-weight:700;margin-bottom:8px">Líneas</div>
       <div id="fact-lineas"></div>
       <button type="button" id="btn-add-linea" style="padding:6px 14px;border:1.5px dashed var(--bdr);border-radius:7px;background:var(--w);font-size:12px;cursor:pointer;margin-bottom:10px">+ Añadir línea</button>
-      <!-- Totales -->
       <div id="fact-totales" style="background:var(--w);border-radius:8px;padding:12px;margin-bottom:10px;font-size:13px"></div>
-      <!-- Notas -->
       <div style="font-size:11px;color:var(--gray);margin-bottom:3px">Notas / condiciones de pago</div>
       <textarea class="fi" id="fact-notas" rows="2" style="resize:vertical;font-family:inherit"></textarea>
       <div style="display:flex;gap:8px;margin-top:10px">
@@ -241,7 +234,6 @@ header p{color:var(--gray);font-size:11px;margin-top:2px}
         <button type="button" id="btn-fact-cancel" style="padding:9px 16px;background:var(--w);border:1px solid var(--bdr);border-radius:8px;font-size:13px;cursor:pointer">Cancelar</button>
       </div>
     </div>
-    <!-- Vista previa PDF -->
     <div id="fact-preview" style="display:none;margin-top:14px"></div>
   </div>
 </div>
@@ -319,19 +311,14 @@ header p{color:var(--gray);font-size:11px;margin-top:2px}
     <span id="inv-sub">Cargando...</span>
   </div>
   <div class="pb">
-    <!-- Alertas stock mínimo -->
     <div id="inv-alertas" style="margin-bottom:12px"></div>
-    <!-- Tabs categorías -->
     <div id="inv-tabs" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap"></div>
-    <!-- Tabla stock -->
     <div id="inv-tabla"></div>
-    <!-- Botones acción -->
     <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
       <button type="button" id="btn-inv-mov" style="padding:8px 16px;background:var(--g);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer">± Registrar movimiento</button>
       <button type="button" id="btn-inv-add" style="padding:8px 16px;background:var(--ow);border:1px solid var(--bdr);border-radius:8px;font-size:12px;cursor:pointer;font-weight:600">+ Añadir producto</button>
       <button type="button" id="btn-inv-hist" style="padding:8px 16px;background:var(--ow);border:1px solid var(--bdr);border-radius:8px;font-size:12px;cursor:pointer;font-weight:600">📋 Historial</button>
     </div>
-    <!-- Formulario movimiento -->
     <div id="inv-form-mov" style="display:none;margin-top:12px;padding:14px;border:1.5px solid var(--g);border-radius:10px;background:var(--lg)">
       <div style="font-size:13px;font-weight:700;color:var(--dg);margin-bottom:10px">Registrar movimiento</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
@@ -364,7 +351,6 @@ header p{color:var(--gray);font-size:11px;margin-top:2px}
         <button type="button" id="btn-mov-cancel" style="padding:9px 16px;background:var(--w);border:1px solid var(--bdr);border-radius:8px;font-size:13px;cursor:pointer">Cancelar</button>
       </div>
     </div>
-    <!-- Formulario nuevo producto -->
     <div id="inv-form-add" style="display:none;margin-top:12px;padding:14px;border:1.5px solid var(--blu);border-radius:10px;background:#eaf2fb">
       <div style="font-size:13px;font-weight:700;color:var(--blu);margin-bottom:10px">Nuevo producto</div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
@@ -382,16 +368,14 @@ header p{color:var(--gray);font-size:11px;margin-top:2px}
         <button type="button" id="btn-add-cancel" style="padding:9px 16px;background:var(--w);border:1px solid var(--bdr);border-radius:8px;font-size:13px;cursor:pointer">Cancelar</button>
       </div>
     </div>
-    <!-- Historial -->
     <div id="inv-historial" style="display:none;margin-top:12px"></div>
   </div>
 </div>
 
 <script>
 
-
 const WEBAPP = 'https://script.google.com/macros/s/AKfycbwB0KmFPNCtXY0oILv2seTi6WPtzBqAH7NUeOrBslw6m5af1vhZC1cHzrniIJH3rDmx/exec';
-  
+
 async function gsCall(action, data) {
   var url = WEBAPP + '?action=' + action;
   if (data) url += '&d=' + encodeURIComponent(JSON.stringify(data));
@@ -556,7 +540,7 @@ function renderPK(rT,hP){
   document.getElementById('pkimp').innerHTML='<table style="width:100%;border-collapse:collapse;font-size:12px"><thead><tr style="background:var(--deep);color:#fff">'+['Escenario','Ingresos año','EBIT pipeline','vs 2025'].map((h,i)=>'<th style="padding:7px 10px;text-align:'+(i?'right':'left')+';font-size:10px;text-transform:uppercase">'+h+'</th>').join('')+'</tr></thead><tbody>'+[{l:'Sin cerrar nada',p:0,e:0},{l:'Pipeline ponderado',p:po,e:ep},{l:'Cierro ≥70%',p:PL.filter(p=>p.p>=70).reduce((s,p)=>s+p.im,0),e:PL.filter(p=>p.p>=70).reduce((s,p)=>s+pkE(p),0)},{l:'Cierro todo',p:to,e:et}].map((r,i)=>{const iT=rT+r.p,eT=r.e,vE=eT-h25.e;return'<tr style="background:'+(i%2?'var(--w)':'var(--ow)')+';border-bottom:1px solid #f0f5eb"><td style="padding:7px 10px;font-weight:600">'+r.l+'</td><td style="padding:7px 10px;text-align:right;font-weight:700;color:var(--dg)">'+E2(iT)+'</td><td style="padding:7px 10px;text-align:right;font-weight:700;color:'+(eT>=0?'var(--dg)':'var(--red)')+'">'+E2(eT)+'</td><td style="padding:7px 10px;text-align:right;font-weight:700;color:'+(vE>=0?'var(--dg)':'var(--red)')+'">'+( vE>=0?'+':'')+E2(vE)+'</td></tr>';}).join('')+'</tbody></table>';
 }
 
-function getG(){const g={};AR.forEach(ar=>{const defs=GD[ar]||[-10,20,50];const sid=ar.replace(/\\s/g,'-');g[ar]=[0,1,2].map(i=>{const el=document.getElementById('gr-'+sid+'-'+i);return el?parseFloat(el.value)||defs[i]:defs[i];});});return g;}
+function getG(){const g={};AR.forEach(ar=>{const defs=GD[ar]||[-10,20,50];const sid=ar.replace(/\s/g,'-');g[ar]=[0,1,2].map(i=>{const el=document.getElementById('gr-'+sid+'-'+i);return el?parseFloat(el.value)||defs[i]:defs[i];});});return g;}
 
 function renderSeg(AY,rA,rT){
   const g=getG();const obj={};
@@ -586,8 +570,8 @@ function renderSeg(AY,rA,rT){
 
 function renderGT(PY){
   const b=SD.byAnioArea[PY]||{};
-  document.getElementById('gtb').innerHTML=AR.filter(a=>(b[a]||HIST_MANUAL?.[PY]?.areas?.[a])>0||(b[a]||0)>0).map(ar=>{
-    const base=b[ar]||0,col=AC[ar]||'#95a5a6';const defs=GD[ar]||[-10,20,50];const sid=ar.replace(/\\s/g,'-');
+  document.getElementById('gtb').innerHTML=AR.filter(a=>(b[a]||0)>0).map(ar=>{
+    const base=b[ar]||0,col=AC[ar]||'#95a5a6';const defs=GD[ar]||[-10,20,50];const sid=ar.replace(/\s/g,'-');
     const cc=['#c0392b','#e67e22','#27ae60'];
     return'<tr><td style="color:'+col+';font-weight:600;font-size:11px;padding:6px 8px"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+col+';margin-right:5px"></span>'+ar+'<br><span style="font-size:10px;color:var(--gray);font-weight:400">'+E2(base)+' ('+PY+')</span></td>'+[0,1,2].map(i=>'<td style="padding:4px 6px;text-align:center"><input class="gt" style="border-color:'+cc[i]+';color:'+cc[i]+';font-weight:700" type="number" id="gr-'+sid+'-'+i+'" value="'+defs[i]+'" min="-100" max="500" step="5" oninput="onGC()"><div style="font-size:9px;color:var(--gray);margin-top:2px" id="gp-'+sid+'-'+i+'">→'+E(base*(1+defs[i]/100))+'</div></td>').join('')+'</tr>';
   }).join('');
@@ -595,7 +579,7 @@ function renderGT(PY){
 
 function onGC(){
   const PY=new Date().getFullYear()-1;const b=SD.byAnioArea[PY]||{};
-  AR.forEach(ar=>{const base=b[ar]||0,sid=ar.replace(/\\s/g,'-');[0,1,2].forEach(i=>{const inp=document.getElementById('gr-'+sid+'-'+i);const pv=document.getElementById('gp-'+sid+'-'+i);if(inp&&pv)pv.textContent='→'+E(base*(1+parseFloat(inp.value||0)/100));});});
+  AR.forEach(ar=>{const base=b[ar]||0,sid=ar.replace(/\s/g,'-');[0,1,2].forEach(i=>{const inp=document.getElementById('gr-'+sid+'-'+i);const pv=document.getElementById('gp-'+sid+'-'+i);if(inp&&pv)pv.textContent='→'+E(base*(1+parseFloat(inp.value||0)/100));});});
   renderSeg(new Date().getFullYear(),SD.byAnioArea[new Date().getFullYear()]||{},Object.values(SD.byAnioArea[new Date().getFullYear()]||{}).reduce((s,v)=>s+v,0)||0);
   renderProj();
 }
