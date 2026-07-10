@@ -390,8 +390,8 @@ header p{color:var(--gray);font-size:11px;margin-top:2px}
 <script>
 
 
-const WEBAPP = 'https://script.google.com/macros/s/AKfycbyt7Gb37EaA_L4-2AsnpvMlmXErX0K5fEHQMXoEg9dxoheBSmrRAZMsAO4n2oIYMxQ/exec';
-
+const WEBAPP = 'https://script.google.com/macros/s/AKfycbwB0KmFPNCtXY0oILv2seTi6WPtzBqAH7NUeOrBslw6m5af1vhZC1cHzrniIJH3rDmx/exec';
+  
 async function gsCall(action, data) {
   var url = WEBAPP + '?action=' + action;
   if (data) url += '&d=' + encodeURIComponent(JSON.stringify(data));
